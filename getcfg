@@ -1,4 +1,7 @@
 #!/usr/bin/expect
+
+# 2014-07-11/DN: An expect script to backup the config of a Cisco ASA because it wasn't being backed up at the time.
+#    I should re-write in Python as I'm trying to learn that (and have just done something very similar). 
 #
 # Set the date.
 set date [timestamp -format %Y-%m-%d_%H%M%S]

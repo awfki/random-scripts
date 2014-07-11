@@ -9,6 +9,8 @@
 # 2013-04-22:
 # Added Show IP Interface (Brief)
 # 	equivalent to ifconfig | egrep "(adapter|IPv4)"
+#-----------------------
+# 2014-07-11/DN: This is about as good as I ever got in perl.  I'd like to re-write it in Python.
 #
 
 foreach ( $ARGV[0] )    # TODO: This could be changed - It just puts $ARGV[0] in $_

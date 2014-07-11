@@ -1,0 +1,93 @@
+#!/usr/bin/perl -w
+use strict;
+#=======================
+#
+# Mac	v1.00 - Dave Noonan - 10/18/2012
+#	Given a MAC address prints it in various formats.
+#
+#=======================
+# TODO: sloppy, needs some cleanup & documentation
+
+sub Usage();
+
+#Usage() unless $ARGV[1];
+#Usage() if $ARGV[1] =~ /-?h|-?\?/i;
+
+foreach (@ARGV)
+{	my ($mac);
+	
+	$mac = lc($_);
+	$mac =~ s/(:|\.|-)//g;
+
+# check for non-HEX characters
+	unless ( $mac =~ m/[0-9a-f]{12}/) {
+		print "\n*** invalid MAC: $mac\n";
+		Usage();
+	}
+
+	my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
+	$mac =~ s/$SearchPattern/$1-$2-$3-$4-$5-$6/;
+	print "\n$mac\n";
+	$mac =~ s/$SearchPattern/$1.$2.$3.$4.$5.$6/;
+	print "$mac\n";
+	$mac =~ s/$SearchPattern/$1:$2:$3:$4:$5:$6/;
+	print "$mac\n";
+	$mac =~ s/$SearchPattern/$1$2.$3$4.$5$6/;
+	print "$mac\n\n";
+
+}
+
+
+sub Usage()
+{
+	print << "EndUsage";
+
+mac.pl v 0.1 - Takes a MAC address and converts to various formats.
+
+Options:
+ None, just give it one or more MACs in any common format. 
+ Once stripped of (-|:|.) the MAC must be 12 characters long and
+ include only 0-9 and a-f.
+ 
+EndUsage
+	exit;
+} # End: sub Usage()
+
+# TODO:
+__END__
+#=======================
+# Original BTM file 2012-10-18
+#=======================
+@ECHO off
+:: This is supposed to take a MAC address and print it in various formats.
+:: =======================
+:: The first bit does an arp with all the MACs in Cisco format
+:: =======================
+IFF "%@LOWER[%1]" EQ "a" THEN
+  arp -a
+	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1:\2:\3:\4:\5:\6/g 
+	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1.\2.\3.\4.\5.\6/g 
+    arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1\2.\3\4.\5\6/g
+
+ELSEIFF "%1" NE "" THEN
+	SET MAC=%@LOWER[%@TRIM[%@STRIP[:-., %1]]]
+	IFF %@LEN[%MAC] EQ 12 THEN
+		ECHO %MAC
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1-\2-\3-\4-\5-\6/g 
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1.\2.\3.\4.\5.\6/g 
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1:\2:\3:\4:\5:\6/g 
+		ECHO %MAC | sed -e s/\(....\)\(....\)\(....\)/\1.\2.\3/g
+	ELSE
+		ECHO.
+		ECHO Error: MAC length is must be twelve characters.
+		ECHO        %MAC length is %@LEN[%MAC] characters.
+  ENDIFF
+
+ELSE
+	ECHO.
+  ECHO MAC a 
+  ECHO     Prints ARP table in -, :, . and cisco formats
+  ECHO.
+	ECHO MAC /mac address in any format
+	ECHO      Prints MAC in -, :, . and cisco formats
+ENDIFF

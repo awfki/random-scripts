@@ -1,0 +1,79 @@
+#!/usr/bin/perl
+# 2012-01-05: I wrote this years ago and I can't believe that I've never 
+# 	put a header here to describe it
+# It replicates a Cisco "show" command so I can do...
+# Show IP Route  	... to get my routing table 
+# Show arp 			... to get the arp table
+# Show interface 	... to get an interface config
+#-----------------------
+# 2013-04-22:
+# Added Show IP Interface (Brief)
+# 	equivalent to ifconfig | egrep "(adapter|IPv4)"
+#
+
+foreach ( $ARGV[0] )    # TODO: This could be changed - It just puts $ARGV[0] in $_
+{
+    if ( m/ip/i )
+    {	if ( $ARGV[1] =~ m/int(?:erface)?/i ) 
+    	{	#print "$ARGV[1]";
+    		system( "ifconfig | egrep --color=auto \"^.*\\d: |inet \"" ); 
+    	}
+    	else 
+    	{	system( "netstat -rnf inet" ); 
+    	}
+    }
+    elsif ( m/rou?t?e?/i )	# TODO: clean up, this allows "show rot, roe, roue
+    {	system( "netstat -rnf inet" );
+    }
+    elsif ( m/arp/i )
+    {	system( "arp -an" );
+    }
+    elsif ( m/int(?:erface)?/i )
+    {   # grab output of "ifconfig"
+        @x = `ifconfig`;
+
+        # if there's a second argment look for it...
+        if( $ARGV[1] )
+        {	# grab the top section of the config
+            $Match = 0;  # Match is used to pass the first blank line right after "adapter"
+			# step through the output looking for "Windows IP Configuration"
+            foreach ( @x )
+            {   if( m/Windows IP Configuration/ or $Match )
+				# when you find the match start printing until...
+                {  $Match++;
+                    print; 
+					#...you hit a blank line after line 2 (it's always blank) and...
+		    		if( m/^\W*$/ and $Match > 2 )
+					{   last;   # ...stop printing
+                    }
+                }  
+            }
+
+            $Match = 0;  # Match is used to pass the first blank line right after "adapter"
+			# step through the output looking for a match
+            foreach ( @x )
+            {   if( m/adapter $ARGV[1]/i or $Match )
+				# when you find the match start printing until...
+                {  $Match++;
+                    print; 
+					#...you hit a blank line after line 2 (it's always blank) and...
+		    		if( m/^\W*$/ and $Match > 2 )
+					{   last;   # ...stop printing
+                    }
+                }  
+            }
+        }
+		# print the whole thing if there's no second argument
+        else
+        { print @x;
+        }
+    }
+    else
+    {	print "Unknown Arguments: @ARGV\n";
+    	print "Options are: ip, route, arp and interface\n";
+    }
+}
+
+
+#print ">$ARGV[1]<\n";
+#print "=======================\n";

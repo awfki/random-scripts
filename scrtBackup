@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Backup SecureCRT config because I NEVER want to have to rebuild it again.
+#
+TODAY=`date +%Y-%m-%d`
+SRCPATH="/Users/davenoonan/Library/Application\ Support/VanDyke/SecureCRT/Config"
+DSTPATH="/Users/davenoonan/Backups/SecureCRT"
+
+eval pushd $SRCPATH
+zip -r $DSTPATH/$TODAY.zip *
+popd

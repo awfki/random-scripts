@@ -2,29 +2,26 @@
 #
 # Set the date.
 set date [timestamp -format %Y-%m-%d_%H%M%S]
-#set DEVICE 10.10.100.1
-set DEVICE 172.16.10.1
-#set DEVICE 50.202.126.170
-#set DEVICE 10.10.106.229
+set DEVICE 172.16.16.1
 
 #ssh to the device as user
-spawn ssh $DEVICE -l gozer
+spawn ssh $DEVICE -l user
 
 #supply the Password at the prompt
 expect "assword:"
-send "Changeme!\n"
+send "password\n"
 
 #go to enable mode
-expect "pancetta>"
+expect ".*>"
 send "en\n"
 expect "assword:"
-send "bagre#sonata#spass\n"
+send "password\n"
 
 #Tell the device to turn off paging
-expect "pancetta#"
+expect ".*#"
 send "term pager 0\n"
 
-expect "pancetta#"
+expect ".*#"
 send "more system:running-config\n"
 
 # output to file with timestamp 
@@ -32,7 +29,7 @@ send "more system:running-config\n"
 log_file -noappend ~/scratch/${date}_getconf.log
 
 #Exit out of the network device
-expect "pancetta#"
+expect ".*#"
 send "exit\n"
 
 # stop output to file 

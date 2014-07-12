@@ -1,0 +1,9 @@
+#!/bin/bash
+while read p; do
+#  echo $p
+  if [ ! -f "$p" ]
+    then 
+      echo Missing: $p
+  fi
+done < Rate\ 5.m3u
+

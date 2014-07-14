@@ -8,7 +8,7 @@ HOST = socket.gethostname()
 
 if HOST.startswith("RSG", 0, 3) :
   #print "work laptop"
-  #os.system("cp -v ~/github/random-scripts/BingWallpaper.py	~/bin/bingwallpaper")
+  #os.system("cp -v ~/github/random-scripts/BingWallpaper.py ~/bin/bingwallpaper")
   os.system("cp -v ~/github/random-scripts/bouncewifi.py	~/bin/bouncewifi")
   #os.system("cp -v ~/github/random-scripts/checkfiles   	~/bin/")
   os.system("cp -v ~/github/random-scripts/getcfg		~/bin/")

@@ -1,0 +1,28 @@
+#!/usr/local/bin/python
+# 2014-07-14/DN: Copies random-scripts to whereever they belong
+# Should probably be a bash script but I'm learning Python.
+
+import os
+import socket
+HOST = socket.gethostname()
+
+if HOST.startswith("RSG", 0, 3) :
+  #print "work laptop"
+  #os.system("cp -v ~/github/random-scripts/BingWallpaper.py	~/bin/bingwallpaper")
+  os.system("cp -v ~/github/random-scripts/bouncewifi.py	~/bin/bouncewifi")
+  #os.system("cp -v ~/github/random-scripts/checkfiles   	~/bin/")
+  os.system("cp -v ~/github/random-scripts/getcfg		~/bin/")
+  os.system("cp -v ~/github/random-scripts/ifcfg		~/bin/")
+  os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
+  os.system("cp -v ~/github/random-scripts/mac		~/bin/")
+  os.system("cp -v ~/github/random-scripts/show		~/bin/  ")
+else :
+  #print "not work laptop"
+  os.system("cp -v ~/github/random-scripts/BingWallpaper.py	~/bin/bingwallpaper")
+  os.system("cp -v ~/github/random-scripts/bouncewifi.py	~/bin/bouncewifi")
+  #os.system("cp -v ~/github/random-scripts/checkfiles   	~/bin/")
+  os.system("cp -v ~/github/random-scripts/getcfg		~/bin/")
+  os.system("cp -v ~/github/random-scripts/ifcfg		~/bin/")
+  os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
+  os.system("cp -v ~/github/random-scripts/mac		~/bin/")
+  os.system("cp -v ~/github/random-scripts/show		~/bin/")

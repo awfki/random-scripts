@@ -1,4 +1,8 @@
 #!/bin/bash
+# 2014-07-14/DN: Not sure what this was for.  
+# I think it was to check that files existed when I was
+# Moving iTunes to a new laptop.
+
 while read p; do
 #  echo $p
   if [ ! -f "$p" ]

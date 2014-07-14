@@ -1,39 +1,74 @@
-#!/usr/bin/expect
-
+#!/usr/local/bin/python
+# 
 # 2014-07-11/DN: An expect script to backup the config of a Cisco ASA because it wasn't being backed up at the time.
-#    I should re-write in Python as I'm trying to learn that (and have just done something very similar). 
+# I should re-write in Python as I'm trying to learn that (and have just done something very similar).
 #
-# Set the date.
-set date [timestamp -format %Y-%m-%d_%H%M%S]
-set DEVICE 172.16.16.1
+# Replacing with pexpect script from another project...
+#
+import pexpect 	#module for logging into the ASA
+import sys 	#module for writing files to log/linux shell
+import argparse	#parsing command line arguments
 
-#ssh to the device as user
-spawn ssh $DEVICE -l user
+# 2014-07-10/DN - debugging to clear the screen with each run
+#import os		#operating system options 
+#os.system('cls' if os.name == 'nt' else 'clear')
 
-#supply the Password at the prompt
-expect "assword:"
-send "password\n"
+parser = argparse.ArgumentParser(description='Get "show version" from a Cisco ASA.')
+parser.add_argument('-u', '--user',     default='cisco', help='user name to login with (default=cisco)')
+parser.add_argument('-p', '--password', default='cisco', help='password to login with (default=cisco)')
+parser.add_argument('-e', '--enable',   default='cisco', help='password for enable (default=cisco)')
+parser.add_argument('-d', '--device',   default='192.168.120.160', help='device to login to (default=192.168.120.160)')
+args = parser.parse_args()
 
-#go to enable mode
-expect ".*>"
-send "en\n"
-expect "assword:"
-send "password\n"
+#child becomes the object to send/receive commands from the ASA
+child = pexpect.spawn('ssh '+args.user+'@'+args.device)
 
-#Tell the device to turn off paging
-expect ".*#"
-send "term pager 0\n"
+#for debugging we send the input and output to the linux shell
+child.logfile_read = sys.stdout
+child.logfile_send = sys.stdout
 
-expect ".*#"
-send "more system:running-config\n"
+#familiar process of logging into a cisco device
+#expect waits for response from the console
+#some special characters here like:
+#   . means any character
+#   + means the previous character 1 or more times
+#   * means the previous character 0 or more times
 
-# output to file with timestamp 
-#-noappend will create a new file if one already exists
-log_file -noappend ~/scratch/${date}_getconf.log
+#the print commands are here in case you run into trouble and will give you an idea where the script stopped
+print 'expecting password'
+child.expect('.*password: ')
 
-#Exit out of the network device
-expect ".*#"
-send "exit\n"
+print 'sending password'
+child.sendline(args.password)
 
-# stop output to file 
-log_file 
+print 'expecting login'
+#expecting the hostname> prompt
+child.expect('.*> ')
+child.sendline('enable')
+
+#expecting the enable password prompt
+child.expect('Password.*')
+print 'sending password'
+child.sendline(args.enable)
+
+print 'expecting exec'
+#expecting a login prompt of hostname#
+child.expect('.*#.*')
+
+#setting the terminal length to infinity so we don't need to press space or enter to continue the prompt
+child.sendline('terminal pager 0')
+
+#setting a new file for output so we can write output from the screen to a file for later
+fout = file(args.device+'.log','w')
+child.expect('.*#.*')
+
+#setting the show version output to a file
+child.logfile_read = fout
+child.sendline('show version')
+
+#expecting the hostname# prompt
+child.expect('.*#.*')
+fout.close()  #closing the file for best practice
+child.sendline('exit')	# logout of the ASA
+exit()
+

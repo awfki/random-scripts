@@ -1,0 +1,19 @@
+#!/bin/bash
+# 2014-08-18/DN: This was originally a quick copy of all the files listed in an 
+# M3U into a directory. It's now an bash example file.
+
+InFile=$1
+TgtDir=$2
+
+if [[ "$InFile" == "" || $TgtDir == "" ]]; then
+  echo
+  echo Usage: whilefile \$1 \$2 where:
+  echo \$1 is a File name
+  echo \$2 is a Directory
+  echo
+else            
+  while read Line; do
+    cp "$Line" "$TgtDir"
+  done <$InFile
+fi
+

@@ -8,3 +8,9 @@ time.sleep( 5 )
 print "networksetup -setairportpower en0 on"
 os.system("networksetup -setairportpower en0 on")
 
+
+""" For possible inclusion in the futures:
+
+	networksetup -setairportnetwork en0 RSGOps
+
+"""

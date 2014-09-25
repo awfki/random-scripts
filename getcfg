@@ -1,9 +1,6 @@
 #!/usr/local/bin/python
 # 
-# 2014-07-11/DN: An expect script to backup the config of a Cisco ASA because it wasn't being backed up at the time.
-# I should re-write in Python as I'm trying to learn that (and have just done something very similar).
-#
-# Replacing with pexpect script from another project...
+# 2014-07-11/DN: A pexpect script to backup the config of a Cisco ASA because it wasn't being backed up at the time.
 #
 import pexpect 	#module for logging into the ASA
 import sys 	#module for writing files to log/linux shell
@@ -17,8 +14,11 @@ parser = argparse.ArgumentParser(description='Get "show version" from a Cisco AS
 parser.add_argument('-u', '--user',     default='cisco', help='user name to login with (default=cisco)')
 parser.add_argument('-p', '--password', default='cisco', help='password to login with (default=cisco)')
 parser.add_argument('-e', '--enable',   default='cisco', help='password for enable (default=cisco)')
-parser.add_argument('-d', '--device',   default='192.168.120.160', help='device to login to (default=192.168.120.160)')
+parser.add_argument('-d', '--device',   default='192.168.1.1', help='device to login to (default=192.168.1.1)')
+parser.add_argument('-c', '--command',  default='show version', help='command to run in the device (default=show version)')
 args = parser.parse_args()
+
+# Add a test here to exit if all of the args are default.
 
 #child becomes the object to send/receive commands from the ASA
 child = pexpect.spawn('ssh '+args.user+'@'+args.device)
@@ -62,9 +62,9 @@ child.sendline('terminal pager 0')
 fout = file(args.device+'.log','w')
 child.expect('.*#.*')
 
-#setting the show version output to a file
+#sending the command output to a file
 child.logfile_read = fout
-child.sendline('show version')
+child.sendline(args.command)
 
 #expecting the hostname# prompt
 child.expect('.*#.*')

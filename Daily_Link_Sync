@@ -2,21 +2,30 @@
 # Sync the data file for the Daily Links Chrome extension.
 
 import shutil
-import os.path, time
+import os, time
+from os.path import expanduser
 
-LDir = "/Users/davenoonan/Library/Application Support/Google/Chrome/Default/Local Storage"
-RDir = "/Users/davenoonan/Dropbox/Apps/Daily_Links"
+Home = expanduser("~")
+LDir = Home+"/Library/Application Support/Google/Chrome/Default/Local Storage"
+RDir = Home+"/Dropbox/Apps/Daily_Links"
 
 File = "chrome-extension_keepgbcgekdilbnpklfknmkfmehppaag_0.localstorage"
 
 LFile = "{}/{}".format(LDir, File)
 RFile = "{}/{}".format(RDir, File)
 
+#print LFile
+#print RFile
+
 LTime = time.ctime(os.path.getmtime(LFile))
 RTime = time.ctime(os.path.getmtime(RFile))
 
 print "LTime: {}".format(LTime)
 print "RTime: {}".format(RTime)
+#exit()
+
+(mode, ino, dev, nlink, uid, gid, size, atime, LTime, ctime) = os.stat(LFile)
+(mode, ino, dev, nlink, uid, gid, size, atime, RTime, ctime) = os.stat(RFile)
 
 if LTime == RTime:
     print "Same Times, No Copy"

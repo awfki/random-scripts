@@ -16,6 +16,7 @@ if HOST.startswith("RSG", 0, 3) :
   os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
   os.system("cp -v ~/github/random-scripts/mac		~/bin/")
   os.system("cp -v ~/github/random-scripts/show		~/bin/  ")
+  os.system("cp -v ~/github/random-scripts/Daily_Links_Sync		~/bin/  ")
 else :
   #print "not work laptop"
   os.system("cp -v ~/github/random-scripts/BingWallpaper.py	~/bin/bingwallpaper")
@@ -26,3 +27,5 @@ else :
   os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
   os.system("cp -v ~/github/random-scripts/mac		~/bin/")
   os.system("cp -v ~/github/random-scripts/show		~/bin/")
+  os.system("cp -v ~/github/random-scripts/Daily_Links_Sync		~/bin/  ")
+

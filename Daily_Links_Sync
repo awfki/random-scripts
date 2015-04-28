@@ -20,21 +20,21 @@ RFile = "{}/{}".format(RDir, File)
 LTime = time.ctime(os.path.getmtime(LFile))
 RTime = time.ctime(os.path.getmtime(RFile))
 
-print "LTime: {}".format(LTime)
-print "RTime: {}".format(RTime)
+#print "LTime: {}".format(LTime)
+#print "RTime: {}".format(RTime)
 #exit()
 
 (mode, ino, dev, nlink, uid, gid, size, atime, LTime, ctime) = os.stat(LFile)
 (mode, ino, dev, nlink, uid, gid, size, atime, RTime, ctime) = os.stat(RFile)
 
 if LTime == RTime:
-    print "Same Times, No Copy"
+#    print "Same Times, No Copy"
 elif LTime > RTime:
 #    print "LTime is newer"
-    print "Copying LFile to RFile"
+#    print "Copying LFile to RFile"
     shutil.copy2(LFile, RFile)
 else:
 #    print "RTime is newer"
-    print "Copying RFile to LFile"
+#    print "Copying RFile to LFile"
     shutil.copy2(RFile, LFile)
 

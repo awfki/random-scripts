@@ -29,6 +29,7 @@ RTime = time.ctime(os.path.getmtime(RFile))
 
 if LTime == RTime:
 #    print "Same Times, No Copy"
+     pass
 elif LTime > RTime:
 #    print "LTime is newer"
 #    print "Copying LFile to RFile"

@@ -1,0 +1,19 @@
+#!/usr/local/bin/python
+# calsync.py
+# rsync my calibre library to the NAS
+import os
+
+#print "\n\nStarting Calibre sync...\n"
+
+startdir = os.getcwd()
+os.chdir("/Users/dave/Downloads/")
+
+#bashCommand = "wget -O calibre-latest.dmg -N http://status.calibre-ebook.com/dist/osx32"
+bashCommand = "wget -O calibre-latest.dmg -N http://status.calibre-ebook.com/dist/osx32"
+os.system(bashCommand)
+
+bashCommand = "open /Users/dave/Downloads/calibre-latest.dmg"
+os.system(bashCommand)
+
+os.chdir(startdir)
+

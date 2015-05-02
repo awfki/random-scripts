@@ -1,15 +1,15 @@
 2014-07-11/DN
 These are various scripts that were hanging out in my ~/bin directory. As I'm trying to figure out git I thought I'd use them as guinea pigs.
 
-BingWallpaper.py - Someone elses script for downloading Bing Wallpaper
+BingWallpaper.py - Found script for downloading Bing Wallpaper
 
-bouncewifi.py - Bounced wifi interface because it won't connect when it comes out of sleep
+bouncewifi.py - Bounce wifi interface because it won't connect when it comes out of sleep
 
 getcfg - An expect script that logs into an ASA. As I've recently done this in Python with pexpect I'll change it to that.
 
 ifcfg - Used just to flip the parameters passed into an alias.
 
-ipcalc - Someone elses script for doing IP subnet calc on the CLI.
+ipcalc - Found script for doing IP subnet calc on the CLI.
 
 mac - Translates a MAC address into various formats
 

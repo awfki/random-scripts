@@ -3,7 +3,7 @@
 # 	put a header here to describe it
 # It replicates a Cisco "show" command so I can do...
 # Show IP Route  	... to get my routing table 
-# Show arp		... to get the arp table
+# Show arp		    ... to get the arp table
 # Show interface 	... to get an interface config
 #-----------------------
 # 2013-04-22:

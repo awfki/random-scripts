@@ -1,3 +1,5 @@
 #!/bin/sh
-ifconfig | egrep "inet |Link "
+# old version
+#ifconfig | egrep "inet |mtu "
 
+ifconfig | int.awk

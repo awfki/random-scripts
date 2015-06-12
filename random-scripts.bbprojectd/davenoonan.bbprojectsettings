@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EmbeddedEditorHidden:davenoonan</key>
+	<false/>
+	<key>ExpandedEditorWidth:davenoonan:displays([(0, 0), (2560, 1440)]:[(-1440, 0), (1440, 900)])</key>
+	<integer>1538</integer>
+	<key>ExpandedItems:davenoonan</key>
+	<array/>
+	<key>FileFilterMode:davenoonan</key>
+	<integer>0</integer>
+	<key>OpenDocuments:davenoonan</key>
+	<array/>
+	<key>OpenDocumentsExpanded</key>
+	<true/>
+	<key>OpenDocumentsSplitterProportion</key>
+	<real>0.86498647928237915</real>
+	<key>ProjectViewVisible</key>
+	<true/>
+	<key>RecentItems:davenoonan</key>
+	<array/>
+	<key>ScratchpadItemsExpanded</key>
+	<true/>
+	<key>ScratchpadItemsVisible</key>
+	<true/>
+	<key>ShowSCMData:davenoonan</key>
+	<false/>
+	<key>ToolbarVisible:davenoonan</key>
+	<true/>
+	<key>ViewSplitterPosition:davenoonan</key>
+	<real>0.14182020723819733</real>
+	<key>WindowFrame:davenoonan:displays([(0, 0), (2560, 1440)]:[(-1440, 0), (1440, 900)])</key>
+	<string>rect(54,-13,1165,1778)</string>
+</dict>
+</plist>

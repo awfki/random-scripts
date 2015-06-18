@@ -1,0 +1,25 @@
+Python script to output interface\tMAC\tIP\tMASK
+
+
+enX	MAC	IP	Mask
+
+
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=10b<RXCSUM,TXCSUM,VLAN_HWTAGGING,AV>
+	ether 68:5b:35:8f:ff:a1
+	inet6 fe80::6a5b:35ff:fe8f:ffa1%en1 prefixlen 64 scopeid 0xe
+	inet 172.22.32.23 netmask 0xffffff00 broadcast 172.22.32.255
+	nd6 options=1<PERFORMNUD>
+	media: autoselect (1000baseT <full-duplex,energy-efficient-ethernet>)
+	status: active
+	
+=======================
+	
+en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=10b<RXCSUM,TXCSUM,VLAN_HWTAGGING,AV>
+	ether 68:5b:35:8f:ff:a1
+	inet6 fe80::6a5b:35ff:fe8f:ffa1%en1 prefixlen 64 scopeid 0xe
+	inet 172.22.32.23 netmask 0xffffff00 broadcast 172.22.32.255
+	nd6 options=1<PERFORMNUD>
+	media: autoselect (1000baseT <full-duplex,energy-efficient-ethernet>)
+	status: active

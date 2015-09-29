@@ -1,4 +1,15 @@
 #!/usr/bin/awk -f
+# 2015-09-29/DN: This was an awk attempt at formatting the output of ifconfig
+# into something more readable.  You had to pipe the output of ifconfig to it 
+# which I did using a separate script shown in the === comment below.
+#=======================
+##!/bin/sh
+## old version
+##ifconfig | egrep "inet |mtu "
+#
+#ifconfig | int.awk
+#=======================
+
 
 BEGIN { 
 	ORS = ""

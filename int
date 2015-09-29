@@ -1,5 +1,67 @@
-#!/bin/sh
-# old version
-#ifconfig | egrep "inet |mtu "
+#!/usr/local/bin/python
+import netifaces
 
-ifconfig | int.awk
+intlist = netifaces.interfaces()
+
+iname = ["Int"]
+ip = ["IP Address"]
+mask = ["Netmask"]
+mac = ["MAC Address"]
+iname.append("-------")
+ip.append("---------------")
+mask.append("---------------")
+mac.append("-----------------")
+
+ctr = 0
+for int in intlist:
+	iname.append(int)
+	addr = netifaces.ifaddresses(int)
+	try:
+		ip.append(addr[netifaces.AF_INET][0]['addr'])
+		mask.append(addr[netifaces.AF_INET][0]['netmask'])
+	except:
+		ip.append("N/A")
+		mask.append("N/A")
+	else:
+		pass
+
+	try:
+		addr[netifaces.AF_LINK]
+	except:
+		mac.append("N/A")
+	else:
+		mac.append(addr[netifaces.AF_LINK][0]['addr'])
+	ctr += 1
+
+print
+ctr = 0 
+for x in iname:	
+	print "{a:>7}  {i:>15}  {n:>15}  {m:>17}".format(a=iname[ctr], i=ip[ctr], n=mask[ctr], m=mac[ctr])
+	ctr += 1
+print
+
+# gwlist = netifaces.gateways()
+# print gwlist
+# for gw in gwlist:
+# 	if gw == 'default':
+# 		pass
+# 	else:
+# 		print gwlist[gw]
+
+
+#=======================
+# Notes
+#=======================
+#netifaces.gateways()
+
+#gws = netifaces.gateways()
+#gws['default'][netifaces.AF_INET]
+
+#print addrs
+#{18: [{'addr': '3c:15:c2:c5:77:de'}], 2: [{'broadcast': '192.168.1.255', 'netmask': '255.255.255.0', 'addr': '192.168.1.222'}], 30: [{'netmask': 'ffff:ffff:ffff:ffff::', 'addr': 'fe80::3e15:c2ff:fec5:77de%en0'}]}
+#print addrs[netifaces.AF_INET]
+#[{'broadcast': '192.168.1.255', 'netmask': '255.255.255.0', 'addr': '192.168.1.222'}]
+# addrs[netifaces.AF_INET][0]
+# addrs[netifaces.AF_INET][0]['addr']
+# addrs[netifaces.AF_INET][0]['netmask']
+# addrs[netifaces.AF_LINK][0]['addr']

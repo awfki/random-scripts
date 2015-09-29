@@ -11,14 +11,17 @@
 # 	equivalent to ifconfig | egrep "(adapter|IPv4)"
 #-----------------------
 # 2014-07-11/DN: This is about as good as I ever got in perl.  I'd like to re-write it in Python.
-#
+#-----------------------
+# 2015-09-29/DN: Changed ip argument to use python int script that I finally wrote.
+# 	Need to fix the int argument so it can show only one interface.
 
 foreach ( $ARGV[0] )    # TODO: This could be changed - It just puts $ARGV[0] in $_
 {
     if ( m/ip/i )
     {	if ( $ARGV[1] =~ m/int(?:erface)?/i ) 
     	{	#print "$ARGV[1]";
-    		system( "ifconfig | egrep --color=auto \"^.*\\d: |inet \"" ); 
+    		#system( "ifconfig | egrep --color=auto \"^.*\\d: |inet \"" ); 
+    		system( "int" ); 
     	}
     	else 
     	{	system( "netstat -rnf inet" ); 

@@ -1,0 +1,17 @@
+#!/usr/local/bin/python
+# 2015-09-30/DN: Script to commafy a single number.
+
+import sys
+
+# converts to int first, if that fails it tries float, if that fails it bails out
+try:
+	input = int(sys.argv[1])
+	output = format(input, ',')
+except ValueError:
+	try:
+		input = float(sys.argv[1])
+		output = format(input, ',')
+	except:
+		output = "{a} is Not a Number".format(a=sys.argv[1])
+
+print output

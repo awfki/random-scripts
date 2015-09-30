@@ -2,7 +2,6 @@
 # 2015-09-30/DN: script to list IPs and MACs in nice table rather than the mess
 # 	that ifconfig spits out.
 # Might want to eliminate the BS interfaces.
-# Might want to sort on interface.
 #=======================
 import netifaces
 

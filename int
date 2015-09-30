@@ -1,7 +1,10 @@
 #!/usr/local/bin/python
+# 2015-09-30/DN: script to list IPs and MACs in nice table rather than the mess
+# 	that ifconfig spits out.
+# Might want to eliminate the BS interfaces.
+# Might want to sort on interface.
+#=======================
 import netifaces
-
-intlist = netifaces.interfaces()
 
 iname = ["Int"]
 ip = ["IP Address"]
@@ -12,6 +15,8 @@ ip.append("---------------")
 mask.append("---------------")
 mac.append("-----------------")
 
+intlist = netifaces.interfaces()
+intlist.sort()
 ctr = 0
 for int in intlist:
 	iname.append(int)
@@ -40,6 +45,7 @@ for x in iname:
 	ctr += 1
 print
 
+# Was going to make it list the 
 # gwlist = netifaces.gateways()
 # print gwlist
 # for gw in gwlist:

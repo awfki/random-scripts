@@ -4,7 +4,15 @@
 # Might want to eliminate the BS interfaces.
 #=======================
 import netifaces
+import sys
 
+# Check for an argument set argv
+try:
+	argv = sys.argv[1]
+except:
+	argv="None"
+
+# Add the header rows to each list
 iname = ["Int"]
 ip = ["IP Address"]
 mask = ["Netmask"]
@@ -14,29 +22,39 @@ ip.append("---------------")
 mask.append("---------------")
 mac.append("-----------------")
 
+# Grab the list of interfaces and sort it
 intlist = netifaces.interfaces()
 intlist.sort()
+
+# Run through the list of interfaces and ...
+#	if they're they match argv or argv is None then...
+# 	add them and L2/L3 addresses and gateways to the appropriate lists
 ctr = 0
 for int in intlist:
-	iname.append(int)
-	addr = netifaces.ifaddresses(int)
-	try:
-		ip.append(addr[netifaces.AF_INET][0]['addr'])
-		mask.append(addr[netifaces.AF_INET][0]['netmask'])
-	except:
-		ip.append("N/A")
-		mask.append("N/A")
+	if (argv is not "None") and ( argv not in int):
+		ctr += 1
+		continue
 	else:
-		pass
+		iname.append(int)
+		addr = netifaces.ifaddresses(int)
+		try:
+			ip.append(addr[netifaces.AF_INET][0]['addr'])
+			mask.append(addr[netifaces.AF_INET][0]['netmask'])
+		except:
+			ip.append("N/A")
+			mask.append("N/A")
+		else:
+			pass
 
-	try:
-		addr[netifaces.AF_LINK]
-	except:
-		mac.append("N/A")
-	else:
-		mac.append(addr[netifaces.AF_LINK][0]['addr'])
-	ctr += 1
+		try:
+			addr[netifaces.AF_LINK]
+		except:
+			mac.append("N/A")
+		else:
+			mac.append(addr[netifaces.AF_LINK][0]['addr'])
+		ctr += 1
 
+# print the lists in a pretty table
 print
 ctr = 0 
 for x in iname:	

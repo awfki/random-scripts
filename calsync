@@ -10,12 +10,12 @@ startdir = os.getcwd()
 os.chdir("/Users/dave/Books/Calibre-MBP/")
 
 print "Removing .DS_Store files...\n"
-#rm -rf .DS_Store
-bashCommand = "rm -rf .DS_Store"
+#find /Users/dave/Books/Calibre-MBP -name ".DS_Store" -delete
+bashCommand = "find /Users/dave/Books/Calibre-MBP -name '.DS_Store' -print -delete"
 os.system(bashCommand)
 
 print "Removing empty directories...\n"
-bashCommand = "find . -type d -empty -delete"
+bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
 os.system(bashCommand)
 
 # !!! Change this so that it looks for /Volumes/Calibre/Calibre-NAS and if not found unmount Calibre 
@@ -39,6 +39,7 @@ os.system(bashCommand)
 #os.system(bashCommand)
 
 print "Returning to original directory...\n"
+print os.system('date')
 os.chdir(startdir)
 
 

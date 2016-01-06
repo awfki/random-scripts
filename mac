@@ -5,8 +5,10 @@ use strict;
 # Mac	v1.00 - Dave Noonan - 10/18/2012
 #	Given a MAC address prints it in various formats.
 #
+#	2016-01-06: removed the . and - version
+#	2016-01-06: it now flips between cisco and pc format (:)
 #=======================
-# TODO: sloppy, needs some cleanup & documentation
+# TODO: sloppy, needs cleanup & documentation
 
 sub Usage();
 
@@ -17,23 +19,31 @@ foreach (@ARGV)
 {	my ($mac);
 	
 	$mac = lc($_);
-	$mac =~ s/(:|\.|-)//g;
+#	$mac =~ s/(:|\.|-)//g;
 
 # check for non-HEX characters
-	unless ( $mac =~ m/[0-9a-f]{12}/) {
-		print "\n*** invalid MAC: $mac\n";
-		Usage();
+#	unless ( $mac =~ m/[0-9a-f]{12}/) {
+#		print "\n*** invalid MAC: $mac\n";
+#		Usage();
+#	}
+
+	if (index($mac, ":") != -1) {
+		my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
+		$mac =~ s/$SearchPattern/$1$2.$3$4.$5$6/;
+		open (TO_CLIPBOARD, "|pbcopy");
+		print TO_CLIPBOARD "$mac\n\n";
+		close (TO_CLIPBOARD);
+		print "$mac\n\n";
+	}
+	elsif (index($mac, ".") != -1) {
+		my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
+		$mac =~ s/$SearchPattern/$1:$2:$3:$4:$5:$6/;
+		open (TO_CLIPBOARD, "|pbcopy");
+		print TO_CLIPBOARD "$mac\n\n";
+		close (TO_CLIPBOARD);
+		print "$mac\n\n";
 	}
 
-	my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
-	$mac =~ s/$SearchPattern/$1-$2-$3-$4-$5-$6/;
-	print "\n$mac\n";
-	$mac =~ s/$SearchPattern/$1.$2.$3.$4.$5.$6/;
-	print "$mac\n";
-	$mac =~ s/$SearchPattern/$1:$2:$3:$4:$5:$6/;
-	print "$mac\n";
-	$mac =~ s/$SearchPattern/$1$2.$3$4.$5$6/;
-	print "$mac\n\n";
 
 }
 
@@ -45,9 +55,10 @@ sub Usage()
 mac.pl v 0.1 - Takes a MAC address and converts to various formats.
 
 Options:
- None, just give it one or more MACs in any common format. 
- Once stripped of (-|:|.) the MAC must be 12 characters long and
- include only 0-9 and a-f.
+ None, just give it one or more MACs in cisco or standard format 
+ and it will convert them to the other format.
+ it no longer does any format checking so if you feed it garbage it
+ give back garbage.
  
 EndUsage
 	exit;

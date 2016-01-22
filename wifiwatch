@@ -1,0 +1,22 @@
+#!/bin/bash
+
+wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
+ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
+ssidthen=`cat ./ssidthen.log`
+
+if [ $ssidnow != $ssidthen ]
+then
+	osascript -e "display alert \"SSID changed from $ssidthen to $ssidnow\" as critical"
+	`mv ./wifiwatch.log ./wifiwatch.old`
+	`echo $ssidnow > ./wifiwatch.log`
+fi
+
+# From the original script that disabled wifi if connected to certain SSIDs
+#case $ssidnow in
+#    PatientWifi|SecExternal)
+#        echo "Switching off PatientWifi SSID..."
+#        networksetup -setairportpower $wifi off
+#        networksetup -removepreferredwirelessnetwork $wifi $ssid
+#        osascript -e 'tell application "System Events" to display alert "blah blah blah" as critical'
+#        ;;
+#esac

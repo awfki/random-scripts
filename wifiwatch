@@ -1,14 +1,20 @@
 #!/bin/bash
 
+#echo PWD: $(pwd)
+SCRIPT_DIR=$(dirname $0)
+#echo $SCRIPT_DIR
 wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
+#echo $wifi
 ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
-ssidthen=`cat ./ssidthen.log`
+#echo $ssidnow
+ssidthen=`cat $SCRIPT_DIR/wifiwatch.log`
+#echo $ssidthen
 
-if [ $ssidnow != $ssidthen ]
+if [ "$ssidnow" != "$ssidthen" ]
 then
-	osascript -e "display alert \"SSID changed from $ssidthen to $ssidnow\" as critical"
-	`mv ./wifiwatch.log ./wifiwatch.old`
-	`echo $ssidnow > ./wifiwatch.log`
+	osascript -e "display alert \"SSID changed from $ssidthen to $ssidnow\" as critical" > /dev/null
+	`mv $SCRIPT_DIR/wifiwatch.log $SCRIPT_DIR/wifiwatch.old`
+	`echo $ssidnow > $SCRIPT_DIR/wifiwatch.log`
 fi
 
 # From the original script that disabled wifi if connected to certain SSIDs

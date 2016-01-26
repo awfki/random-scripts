@@ -9,12 +9,13 @@ OUTPUT_DIR=/tmp
 ssidthen=`cat $OUTPUT_DIR/wifiwatch.log`
 #echo $ssidthen
 
-# Get the wifi interface
-wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
+# Get the wifi interface - not needed as I changed to aiport -I to get the SSID
+#wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
 #echo $wifi
 
-# Get the current SSID
-ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
+# Get the current SSID - changed to airport -I to get the SSID
+#ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
+ssidnow=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}')
 #echo $ssidnow
 
 # If the current SSID isn't then same as the last SSID then...

@@ -1,21 +1,33 @@
 #!/bin/bash
 
-#echo PWD: $(pwd)
-SCRIPT_DIR=$(dirname $0)
-#echo $SCRIPT_DIR
-wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
-#echo $wifi
-ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
-#echo $ssidnow
-ssidthen=`cat $SCRIPT_DIR/wifiwatch.log`
+# set the directory for the output files (wifiwatch.log and .old)
+#OUTPUT_DIR=$(dirname $0)
+OUTPUT_DIR=/tmp
+#echo $OUTPUT_DIR
+
+# Read the last SSID from the log
+ssidthen=`cat $OUTPUT_DIR/wifiwatch.log`
 #echo $ssidthen
 
+# Get the wifi interface
+wifi=`networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/,/Ethernet/' | awk 'NR==2' | cut -d " " -f 2`
+#echo $wifi
+
+# Get the current SSID
+ssidnow=`networksetup -getairportnetwork $wifi | cut -d " " -f 4`
+#echo $ssidnow
+
+# If the current SSID isn't then same as the last SSID then...
 if [ "$ssidnow" != "$ssidthen" ]
 then
+	# diplay an alert that the SSID has changed and update the logs (.old is just reference, not used for anything)
 	osascript -e "display alert \"SSID changed from $ssidthen to $ssidnow\" as critical" > /dev/null
-	`mv $SCRIPT_DIR/wifiwatch.log $SCRIPT_DIR/wifiwatch.old`
-	`echo $ssidnow > $SCRIPT_DIR/wifiwatch.log`
+	`echo $ssidnow  > $OUTPUT_DIR/wifiwatch.log`
+	`echo $ssidthen > $OUTPUT_DIR/wifiwatch.old`
 fi
+
+#=======================
+# Artifacts
 
 # From the original script that disabled wifi if connected to certain SSIDs
 #case $ssidnow in
@@ -26,3 +38,39 @@ fi
 #        osascript -e 'tell application "System Events" to display alert "blah blah blah" as critical'
 #        ;;
 #esac
+
+# couldn't get the variables for this line to pass correctly
+#	osascript -e "display dialog "SSID changed from " $ssidthen & " to " & $ssidnow as string"
+
+#=======================
+# To make this work on a schedule create edit $HOME/Library/LaunchAgents/com.dnoonan.wifiwatch.plist and paste the following into it.
+# <?xml version="1.0" encoding="UTF-8"?>
+# <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+# <plist version="1.0">
+# <dict>
+#   <key>Label</key>
+#   <string>com.dnoonan.wifiwatch</string>
+#
+#   <key>ProgramArguments</key>
+#   <array>
+#     <string>/Users/dnoonan/bin/wifiwatch</string>
+#   </array>
+#
+#   <key>Nice</key>
+#   <integer>1</integer>
+#
+#   <key>StartInterval</key>
+#   <integer>60</integer>
+#
+#   <key>RunAtLoad</key>
+#   <true/>
+#
+#   <key>StandardErrorPath</key>
+#   <string>/tmp/wifiwatch.err</string>
+#
+#   <key>StandardOutPath</key>
+#   <string>/tmp/wifiwatch.out</string>
+# </dict>
+# </plist>
+#
+# Now touch /tmp/wifiwatch.log /tmp/wifiwatch.old

@@ -1,0 +1,16 @@
+#!/bin/sh
+! script to open a second instance of ASDM
+open -n '/Applications/Cisco ASDM-IDM.app'
+
+#on run
+#    do shell script "open -n /Applications/ASDM-IDM.app"
+#    tell application "ASDM-IDM" to activate
+#end run
+
+#on open theFiles
+#    repeat with theFile in theFiles
+#        do shell script "open -na /Applications/ASDM-IDM.app" & quote & (POSIX path of theFile) & quote
+#    end repeat
+#    tell application "ASDM-IDM" to activate
+#end open
+

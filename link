@@ -1,0 +1,20 @@
+#!/bin/bash
+# 2016-02-29/DN: Switches network location
+
+case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
+    wifi)
+ 	echo Changing location to 2-WiFi_First
+	sudo networksetup -switchtolocation 2-WiFi_First
+        ;;
+    wired)
+ 	echo Changing location to 1-Wired_First
+	sudo networksetup -switchtolocation 1-Wired_First
+	;;
+    "")
+	echo List of all network locations:
+        networksetup -listlocations | sort
+	;;
+    *) 	
+	sudo networksetup -switchtolocation $1
+        ;;
+esac

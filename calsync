@@ -29,9 +29,11 @@ os.system(bashCommand)
 #bashCommand = "automator ~/bin/Mount_Calibre.workflow"
 #os.system(bashCommand)
 
-print "Copying files to /Volumes/Books/Calibre-NAS ...\n"
+#print "Copying files to /Volumes/Books/Calibre-NAS ...\n"
+print "Copying files to 192.168.1.15:calibre-server ...\n"
 #bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
-bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
+#bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
+bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.15:calibre-server"
 os.system(bashCommand)
 
 #print "Unmount /Volumes/Calibre...\n"

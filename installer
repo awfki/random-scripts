@@ -19,6 +19,7 @@ if HOST.startswith("RSG", 0, 3) :
   os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
   os.system("cp -v ~/github/random-scripts/mac		~/bin/")
   os.system("cp -v ~/github/random-scripts/show		~/bin/  ")
+  os.system("cp -v ~/github/random-scripts/calsync		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/calupdate		~/bin/  ")
 else :
   #print "not work laptop"
@@ -33,5 +34,6 @@ else :
   os.system("cp -v ~/github/random-scripts/ipcalc		~/bin/")
   os.system("cp -v ~/github/random-scripts/mac		~/bin/")
   os.system("cp -v ~/github/random-scripts/show		~/bin/")
+  os.system("cp -v ~/github/random-scripts/calsync		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/calupdate		~/bin/  ")
 

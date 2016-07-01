@@ -1,4 +1,5 @@
 #!/bin/bash
+# 2016-03-24 TODO: documentation would be nice...
 
 # set the directory for the output files (wifiwatch.log and .old)
 #OUTPUT_DIR=$(dirname $0)
@@ -22,7 +23,7 @@ ssidnow=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Curren
 if [ "$ssidnow" != "$ssidthen" ]
 then
 	# diplay an alert that the SSID has changed and update the logs (.old is just reference, not used for anything)
-	osascript -e "display alert \"SSID changed from $ssidthen to $ssidnow\" as critical" > /dev/null
+	osascript -e "display notification \"SSID changed from $ssidthen to $ssidnow\" with title \"WifiWatch\""
 	`echo $ssidnow  > $OUTPUT_DIR/wifiwatch.log`
 	`echo $ssidthen > $OUTPUT_DIR/wifiwatch.old`
 fi

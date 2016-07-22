@@ -17,7 +17,7 @@ sub Usage();
 
 foreach (@ARGV)
 {	my ($mac);
-	
+
 	$mac = lc($_);
 #	$mac =~ s/(:|\.|-)//g;
 
@@ -31,7 +31,7 @@ foreach (@ARGV)
 		my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
 		$mac =~ s/$SearchPattern/$1$2.$3$4.$5$6/;
 		open (TO_CLIPBOARD, "|pbcopy");
-		print TO_CLIPBOARD "$mac\n\n";
+		print TO_CLIPBOARD "$mac\n";
 		close (TO_CLIPBOARD);
 		print "$mac\n\n";
 	}
@@ -39,7 +39,15 @@ foreach (@ARGV)
 		my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
 		$mac =~ s/$SearchPattern/$1:$2:$3:$4:$5:$6/;
 		open (TO_CLIPBOARD, "|pbcopy");
-		print TO_CLIPBOARD "$mac\n\n";
+		print TO_CLIPBOARD "$mac\n";
+		close (TO_CLIPBOARD);
+		print "$mac\n\n";
+	}
+	elsif (index($mac, "-") != -1) {
+		my $SearchPattern = "([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})[-:.]?([0-9a-f]{2})";
+		$mac =~ s/$SearchPattern/$1:$2:$3:$4:$5:$6/;
+		open (TO_CLIPBOARD, "|pbcopy");
+		print TO_CLIPBOARD "$mac\n";
 		close (TO_CLIPBOARD);
 		print "$mac\n\n";
 	}
@@ -55,11 +63,11 @@ sub Usage()
 mac.pl v 0.1 - Takes a MAC address and converts to various formats.
 
 Options:
- None, just give it one or more MACs in cisco or standard format 
+ None, just give it one or more MACs in cisco or standard format
  and it will convert them to the other format.
  it no longer does any format checking so if you feed it garbage it
  give back garbage.
- 
+
 EndUsage
 	exit;
 } # End: sub Usage()
@@ -76,17 +84,17 @@ __END__
 :: =======================
 IFF "%@LOWER[%1]" EQ "a" THEN
   arp -a
-	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1:\2:\3:\4:\5:\6/g 
-	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1.\2.\3.\4.\5.\6/g 
+	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1:\2:\3:\4:\5:\6/g
+	arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1.\2.\3.\4.\5.\6/g
     arp -a | sed -e s/\(..\)-\(..\)-\(..\)-\(..\)-\(..\)-\(..\)/\1\2.\3\4.\5\6/g
 
 ELSEIFF "%1" NE "" THEN
 	SET MAC=%@LOWER[%@TRIM[%@STRIP[:-., %1]]]
 	IFF %@LEN[%MAC] EQ 12 THEN
 		ECHO %MAC
-		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1-\2-\3-\4-\5-\6/g 
-		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1.\2.\3.\4.\5.\6/g 
-		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1:\2:\3:\4:\5:\6/g 
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1-\2-\3-\4-\5-\6/g
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1.\2.\3.\4.\5.\6/g
+		ECHO %MAC | sed -e s/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\)/\1:\2:\3:\4:\5:\6/g
 		ECHO %MAC | sed -e s/\(....\)\(....\)\(....\)/\1.\2.\3/g
 	ELSE
 		ECHO.
@@ -96,7 +104,7 @@ ELSEIFF "%1" NE "" THEN
 
 ELSE
 	ECHO.
-  ECHO MAC a 
+  ECHO MAC a
   ECHO     Prints ARP table in -, :, . and cisco formats
   ECHO.
 	ECHO MAC /mac address in any format

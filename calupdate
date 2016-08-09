@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # calsync.py
 # rsync my calibre library to the NAS
 import os
@@ -16,4 +16,3 @@ bashCommand = "open /Users/dave/Downloads/calibre-latest.dmg"
 os.system(bashCommand)
 
 os.chdir(startdir)
-

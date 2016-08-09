@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # 2014-07-14/DN: Copies random-scripts to whereever they belong
 # Should probably be a bash script but I'm learning Python.
 
@@ -38,4 +38,3 @@ else :
   os.system("cp -v ~/github/random-scripts/calsync		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/calupdate		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/wifiwatch		~/bin/  ")
-

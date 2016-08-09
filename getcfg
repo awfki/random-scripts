@@ -1,5 +1,5 @@
-#!/usr/local/bin/python
-# 
+#!/usr/bin/env python
+#
 # 2014-07-11/DN: A pexpect script to backup the config of a Cisco ASA because it wasn't being backed up at the time.
 #
 import pexpect 	#module for logging into the ASA
@@ -7,7 +7,7 @@ import sys 	#module for writing files to log/linux shell
 import argparse	#parsing command line arguments
 
 # 2014-07-10/DN - debugging to clear the screen with each run
-#import os		#operating system options 
+#import os		#operating system options
 #os.system('cls' if os.name == 'nt' else 'clear')
 
 parser = argparse.ArgumentParser(description='Get "show version" from a Cisco ASA.')
@@ -71,4 +71,3 @@ child.expect('.*#.*')
 fout.close()  #closing the file for best practice
 child.sendline('exit')	# logout of the ASA
 exit()
-

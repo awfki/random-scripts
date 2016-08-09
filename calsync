@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # calsync.py
 # rsync my calibre library to the NAS
 import os
@@ -18,8 +18,8 @@ print "Removing empty directories...\n"
 bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
 os.system(bashCommand)
 
-# !!! Change this so that it looks for /Volumes/Calibre/Calibre-NAS and if not found unmount Calibre 
-# !!! This is to fix cases where OSX goes to sleep with the NAS mounted and then 
+# !!! Change this so that it looks for /Volumes/Calibre/Calibre-NAS and if not found unmount Calibre
+# !!! This is to fix cases where OSX goes to sleep with the NAS mounted and then
 # !!!    can't get to it when it wakes up
 #print "Unmount /Volumes/Calibre...\n"
 #bashCommand = "umount /Volumes/Calibre"

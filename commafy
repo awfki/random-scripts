@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # 2015-09-30/DN: Script to commafy a single number.
 
 import sys

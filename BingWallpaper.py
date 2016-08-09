@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import os
 import md5
 import pprint
@@ -49,4 +49,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-

@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # Sync the data file for the Daily Links Chrome extension.
 
 import shutil
@@ -38,4 +38,3 @@ else:
 #    print "RTime is newer"
 #    print "Copying RFile to LFile"
     shutil.copy2(RFile, LFile)
-

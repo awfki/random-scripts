@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # 2015-09-30/DN: script to list IPs and MACs in nice table rather than the mess
 # 	that ifconfig spits out.
 # 2015-10-01/DN: Added an option to filter interfaces
@@ -56,8 +56,8 @@ for int in intlist:
 
 # print the lists in a pretty table
 print
-ctr = 0 
-for x in iname:	
+ctr = 0
+for x in iname:
 	print "{a:>7}  {i:>15}  {n:>15}  {m:>17}".format(a=iname[ctr], i=ip[ctr], n=mask[ctr], m=mac[ctr])
 	ctr += 1
 print

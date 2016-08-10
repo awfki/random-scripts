@@ -35,23 +35,23 @@ child.logfile_send = sys.stdout
 #   * means the previous character 0 or more times
 
 #the print commands are here in case you run into trouble and will give you an idea where the script stopped
-print 'expecting password'
+print('expecting password')
 child.expect('.*password: ')
 
-print 'sending password'
+print('sending password')
 child.sendline(args.password)
 
-print 'expecting login'
+print('expecting login')
 #expecting the hostname> prompt
 child.expect('.*> ')
 child.sendline('enable')
 
 #expecting the enable password prompt
 child.expect('Password.*')
-print 'sending password'
+print('sending password')
 child.sendline(args.enable)
 
-print 'expecting exec'
+print('expecting exec')
 #expecting a login prompt of hostname#
 child.expect('.*#.*')
 

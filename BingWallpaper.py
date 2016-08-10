@@ -19,7 +19,6 @@ set desktop picture to POSIX file "%s"
 end tell
 END"""
 
-
 def set_desktop_background(destination):
   subprocess.Popen(SCRIPT%destination, shell=True)
 
@@ -33,7 +32,7 @@ def parseFeed(rss):
   try:
     rss_contents = urlopen( rss )
   except:
-    print "Failed to read rss feed %s" % rss
+    print ("Failed to read rss feed %s" % rss)
     return
   rss_src = rss_contents.read()
   rss_contents.close()

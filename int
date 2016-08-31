@@ -6,6 +6,12 @@
 #=======================
 import netifaces
 import sys
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+logging.debug('=======================')
+logging.debug('=== start of program ===')
 
 # Check for an argument set argv
 try:
@@ -62,6 +68,10 @@ for x in iname:
 	print("{a:>7}  {i:>15}  {n:>15}  {m:>17}".format(a=iname[ctr], i=ip[ctr], n=mask[ctr], m=mac[ctr]) )
 	ctr += 1
 print
+
+logging.debug('=== end of program ===')
+logging.debug('=======================')
+
 
 # Was going to make it list the gateway but it's not simple
 # especially if there's an L2 gateway (VPN tunnel) involved

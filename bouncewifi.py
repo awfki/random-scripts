@@ -18,6 +18,7 @@ time.sleep( 5 )
 logging.debug('networksetup -setairportpower en0 on')
 os.system("networksetup -setairportpower en0 on")
 
+logging.debug('end of program')
 
 """ For possible inclusion in the futures:
 

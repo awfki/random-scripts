@@ -2,6 +2,11 @@
 # calsync.py
 # rsync my calibre library to the NAS
 import os
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.debug('start of program')
 
 print("\n\nStarting Calibre sync...\n")
 

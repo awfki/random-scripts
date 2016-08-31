@@ -1,40 +1,51 @@
 #!/usr/bin/env python
 # Sync the data file for the Daily Links Chrome extension.
-
+# Uses Lxxx and Rxxx where L = Local and R = Remote (via Dropbox)
 import shutil
 import os, time
 from os.path import expanduser
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+logging.debug('=======================')
+logging.debug('=== start of program ===')
 
 Home = expanduser("~")
-LDir = Home+"/Library/Application Support/Google/Chrome/Default/Local Storage"
-RDir = Home+"/Dropbox/Apps/Daily_Links"
+logging.debug('Home: ' + Home)
+
+LDir = Home + "/Library/Application Support/Google/Chrome/Default/Local Storage"
+RDir = Home + "/Dropbox/Apps/Daily_Links"
+logging.debug('LDir:' + LDir)
+logging.debug('RDir:' + RDir)
 
 File = "chrome-extension_keepgbcgekdilbnpklfknmkfmehppaag_0.localstorage"
+logging.debug('File: ' + File)
 
 LFile = "{}/{}".format(LDir, File)
 RFile = "{}/{}".format(RDir, File)
-
-#print LFile
-#print RFile
+logging.debug('LFile: ' + LFile)
+logging.debug('RFile: ' + RFile)
 
 LTime = time.ctime(os.path.getmtime(LFile))
 RTime = time.ctime(os.path.getmtime(RFile))
-
-#print "LTime: {}".format(LTime)
-#print "RTime: {}".format(RTime)
-#exit()
+logging.debug("LTime: {}".format(LTime))
+logging.debug("RTime: {}".format(RTime))
 
 (mode, ino, dev, nlink, uid, gid, size, atime, LTime, ctime) = os.stat(LFile)
 (mode, ino, dev, nlink, uid, gid, size, atime, RTime, ctime) = os.stat(RFile)
 
 if LTime == RTime:
-#    print "Same Times, No Copy"
-     pass
+    logging.debug("Same Times, No Copy")
+    pass
 elif LTime > RTime:
-#    print "LTime is newer"
-#    print "Copying LFile to RFile"
+    logging.debug("LTime is newer")
+    logging.debug("Copying LFile to RFile")
     shutil.copy2(LFile, RFile)
 else:
-#    print "RTime is newer"
-#    print "Copying RFile to LFile"
+    logging.debug("RTime is newer")
+    logging.debug("Copying RFile to LFile")
     shutil.copy2(RFile, LFile)
+
+logging.debug('=== end of program ===')
+logging.debug('=======================')

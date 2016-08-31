@@ -1,18 +1,32 @@
 #!/usr/bin/env python
-# calsync.py
-# rsync my calibre library to the NAS
+# calupdate.py
+# download the latest version of calibre
 import os
+import logging
 
-#print "\n\nStarting Calibre sync...\n"
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+logging.debug('=======================')
+logging.debug('=== start of program ===')
+
 
 startdir = os.getcwd()
-os.chdir("/Users/dave/Downloads/")
+logging.debug('startdir = ' + startdir)
+
+dl_dir = os.path.expanduser("~/Downloads")
+logging.debug('dl_dir = ' + dl_dir)
+os.chdir(dl_dir)
 
 #bashCommand = "wget -O calibre-latest.dmg -N http://status.calibre-ebook.com/dist/osx32"
 bashCommand = "wget -O calibre-latest.dmg -N http://status.calibre-ebook.com/dist/osx32"
+logging.debug('bashCommand = ' + bashCommand)
 os.system(bashCommand)
 
-bashCommand = "open /Users/dave/Downloads/calibre-latest.dmg"
+bashCommand = "open " + dl_dir + "/calibre-latest.dmg"
+logging.debug('bashCommand = ' + bashCommand)
 os.system(bashCommand)
 
 os.chdir(startdir)
+
+logging.debug('=== end of program ===')
+logging.debug('=======================')

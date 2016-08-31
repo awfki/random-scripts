@@ -21,7 +21,7 @@ com.dnoonan.wifiwatch.plist - plist for adding wifiwatch to lauchd so it will ru
 
 commafy - Adds commas to a number. I think I found this online.
 
-getcfg - An Python/pexpect script that logs into an ASA. 
+getcfg - An Python/pexpect script that logs into an ASA.
 
 ifcfg - Used just to flip the parameters passed into an alias.
 

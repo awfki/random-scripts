@@ -5,6 +5,12 @@
 import pexpect 	#module for logging into the ASA
 import sys 	#module for writing files to log/linux shell
 import argparse	#parsing command line arguments
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+logging.debug('=======================')
+logging.debug('=== start of program ===')
 
 # 2014-07-10/DN - debugging to clear the screen with each run
 #import os		#operating system options

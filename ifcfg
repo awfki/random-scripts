@@ -1,14 +1,9 @@
 #!/bin/bash
 # This just flips the CLI params of an alias kept in bashrc.
-#   Allows me to enter "ifdn eth0" which calls this script.  Probably should be a bash function instead of 
+#   Allows me to enter "ifdn eth0" which calls this script.  Probably should be a bash function instead of
 #   a standalone script.
 # The aliases in ~/.bashrc:
 #alias ifdn='ifcfg down'
 #alias ifup='ifcfg up'
 
-
-
 sudo ifconfig $2 $1 
-
-
-

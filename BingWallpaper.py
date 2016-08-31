@@ -8,6 +8,12 @@ from time import strftime
 from urllib.request import URLopener
 from urllib.request import urlopen
 from xml.dom.minidom import parseString
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+logging.debug('=======================')
+logging.debug('=== start of program ===')
 
 # Defines source and destination of image
 rss_feed = 'http://feeds.feedburner.com/bingimages';

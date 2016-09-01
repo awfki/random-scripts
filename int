@@ -38,30 +38,41 @@ intlist.sort()
 # 	add them and L2/L3 addresses and gateways to the appropriate lists
 ctr = 0
 for int in intlist:
+	logging.debug('for: int = ' + int)
+
 	if (argv is not "None") and ( argv not in int):
+		logging.debug('if: ' + argv)
 		ctr += 1
 		continue
 	else:
+		logging.debug('else:')
 		iname.append(int)
 		addr = netifaces.ifaddresses(int)
 		try:
+			logging.debug('try: ip.append')
 			ip.append(addr[netifaces.AF_INET][0]['addr'])
 			mask.append(addr[netifaces.AF_INET][0]['netmask'])
 		except:
+			logging.debug('except:')
 			ip.append("N/A")
 			mask.append("N/A")
 		else:
+			logging.debug('else: pass')
 			pass
 
 		try:
+			logging.debug('try: addr[netifaces.AF_LINK]')
 			addr[netifaces.AF_LINK]
 		except:
+			logging.debug('except: mac.append')
 			mac.append("N/A")
 		else:
+			logging.debug('else: mac.append')
 			mac.append(addr[netifaces.AF_LINK][0]['addr'])
 		ctr += 1
 
 # print the lists in a pretty table
+logging.debug('=== print the table ===')
 print
 ctr = 0
 for x in iname:

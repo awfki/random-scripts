@@ -10,6 +10,11 @@
 
 import os
 import logging
+#import send2trash
+# example send2trash.send2trash('bacon.txt')
+#for folderName, subfolders, filenames in os.walk('C:\\delicious'):
+import zipfile
+import rarfile
 
 logging.disable(logging.CRITICAL)
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
@@ -23,6 +28,32 @@ logging.debug('startdir = ' + startdir)
 in_dir = os.path.expanduser("~/Downloads/cal-import")
 logging.debug('in_dir = ' + in_dir)
 os.chdir(in_dir)    # this should probably try in case there's an error
+
+# exampleZip = zipfile.ZipFile('Warriors_Moon.zip')
+# exampleZip.extractall()
+# exampleZip.close()
+
+## This didn't work, possibly because bsdtar doesn't read some rar3 files
+#exampleRar = rarfile.RarFile('Michelle Paver.rar')
+#exampleRar.extractall()
+#exampleRar.close()
+
+# Walk the entire folder tree and uncompress the zip files in each folder.
+for foldername, subfolders, filenames in os.walk(in_dir):
+	logging.debug('walking... ' + foldername)
+	# Add the current folder to the ZIP file.
+	for f in (filenames):
+		logging.debug('filename... ' + f)
+		if f.endswith('.zip'):
+			logging.debug('unzipping... ' + f)
+			czip = zipfile.ZipFile(f)
+			czip.extractall()
+			czip.close()
+		elif f.endswith('.rar'):
+			bashCommand = "open \'" + f + "\'"
+			logging.debug('bashCommand = ' + bashCommand)
+			os.system(bashCommand)
+
 
 # need to get directory and then unpack any archives
 # bash open works for rar and zip but there's some funkiness

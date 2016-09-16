@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # calsync.py
 # rsync my calibre library to the NAS
 import os
@@ -39,7 +39,7 @@ os.system(bashCommand)
 print("Copying files to 192.168.1.15:boardgame-server ...\n")
 #bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
 #bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
-bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.15:boardgame-server"
+bashCommand = "rsync -h -r -t -x -v --info=STATS2 --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.15:boardgame-server"
 os.system(bashCommand)
 
 #print "Unmount /Volumes/Calibre...\n"

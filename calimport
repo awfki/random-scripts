@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # calimport.py
-# Runs through a directory (and sub-dirs) and eliminates unwanted ebook formats
-# and imports the remainder to calibre.
-# "Eliminates unwanted formats" means keep the most preferred format and
-# delete the rest.  Formats are preferred in the order
-# epub, azw3, azw, mobi, ... pdf
-# This should also unpack archives but as they're in varying formats I'm not
-# sure how to do that from CLI - hmmm, the open command works
+# Given a directory (and sub-dirs) it ...
+# * unpacks all the archives
+# * Goes through each new sub-dir and eliminates unwanted ebook formats
+# 	"Eliminates unwanted formats" means keep the most preferred format and
+# 	delete the rest.  Formats are preferred in the order
+# 	epub azw3 azw mobi (fb2 lit prc) pdf | cbz, cbr
+# * if the sub-dir has an opf file it imports the remainder to calibre.
 
 import os
 import logging
-#import send2trash
-# example send2trash.send2trash('bacon.txt')
-#for folderName, subfolders, filenames in os.walk('C:\\delicious'):
-import zipfile
-import rarfile
+import send2trash
+# example: send2trash.send2trash('bacon.txt')
 
 logging.disable(logging.CRITICAL)
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
@@ -24,36 +21,27 @@ logging.debug('=== start of program ===')
 startdir = os.getcwd()
 logging.debug('startdir = ' + startdir)
 
-#in_dir = os.path.expanduser("~/Dropbox/_calibre-auto-add")
-in_dir = os.path.expanduser("~/Downloads/cal-import")
+in_dir = os.path.expanduser("~/Dropbox/_calibre-auto-add")
 logging.debug('in_dir = ' + in_dir)
 os.chdir(in_dir)    # this should probably try in case there's an error
 
-# exampleZip = zipfile.ZipFile('Warriors_Moon.zip')
-# exampleZip.extractall()
-# exampleZip.close()
-
-## This didn't work, possibly because bsdtar doesn't read some rar3 files
-#exampleRar = rarfile.RarFile('Michelle Paver.rar')
-#exampleRar.extractall()
-#exampleRar.close()
-
-# Walk the entire folder tree and uncompress the zip files in each folder.
+# Walk the entire folder tree and uncompress the zip|rar files in each folder.
 for foldername, subfolders, filenames in os.walk(in_dir):
 	logging.debug('walking... ' + foldername)
 	# Add the current folder to the ZIP file.
-	for f in (filenames):
-		logging.debug('filename... ' + f)
-		if f.endswith('.zip'):
-			logging.debug('unzipping... ' + f)
-			czip = zipfile.ZipFile(f)
-			czip.extractall()
-			czip.close()
-		elif f.endswith('.rar'):
-			bashCommand = "open \'" + f + "\'"
-			logging.debug('bashCommand = ' + bashCommand)
+	for fn in (filenames):
+		logging.debug('filename... ' + fn)
+		if fn.endswith('.zip'):
+			logging.debug('opening... ' + fn)
+			bashCommand = "open \'" + os.path.join(foldername, fn) + "\'"
+			os.system(bashCommand)
+		elif fn.endswith('.rar'):
+			logging.debug('opening... ' + fn)
+			bashCommand = "open \'" + os.path.join(foldername, fn) + "\'"
 			os.system(bashCommand)
 
+# archives are unpacked, now need to import and then delete any epubs
+#		what about dupes?
 
 # need to get directory and then unpack any archives
 # bash open works for rar and zip but there's some funkiness

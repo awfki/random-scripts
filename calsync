@@ -42,6 +42,12 @@ print("Copying files to 192.168.1.15:calibre-server ...\n")
 bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.15:calibre-server"
 os.system(bashCommand)
 
+#=======================
+# RESTORE - Reverse the Stream - Server back to MBP
+# note the --dry-run, also note the / on the source but not the destination
+#rsync --dry-run -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.15:calibre-server/ /Users/dave/Books/Calibre-MBP
+
+
 #print "Unmount /Volumes/Calibre...\n"
 #bashCommand = "umount /Volumes/Calibre"
 #os.system(bashCommand)

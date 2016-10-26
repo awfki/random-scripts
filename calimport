@@ -35,20 +35,17 @@ for foldername, subfolders, filenames in os.walk(in_dir):
 			logging.debug('opening... ' + fn)
 			bashCommand = "open \'" + os.path.join(foldername, fn) + "\'"
 			os.system(bashCommand)
+			send2trash.send2trash(fn)
 		elif fn.endswith('.rar'):
 			logging.debug('opening... ' + fn)
 			bashCommand = "open \'" + os.path.join(foldername, fn) + "\'"
 			os.system(bashCommand)
+			send2trash.send2trash(fn)
 
 # archives are unpacked, now need to import and then delete any epubs
 #		what about dupes?
+#bashCommand = "caldb add --recurse --tags=#CleanMe-YYYY-MM --one-book-per-directory --add=*.epub ~/Dropbox/_calibre-auto-add"
 
-# need to get directory and then unpack any archives
-# bash open works for rar and zip but there's some funkiness
-#	as it uses the GUI unarchiver
-# bashCommand = "open ChildrenMoon3.rar"
-# logging.debug('bashCommand = ' + bashCommand)
-# os.system(bashCommand)
 
 quit()
 #=======================

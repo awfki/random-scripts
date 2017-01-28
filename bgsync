@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 # calsync.py
 # rsync my calibre library to the NAS
 import os

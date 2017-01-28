@@ -1,60 +1,70 @@
 #!/usr/bin/env python
-# calsync.py
-# rsync my calibre library to the NAS
+# calsync
+# rsync my calibre library to an iMac and Mac Mini that serve up the files
+# ToDo: Add options to backup to one or both libraries (or to an arbitrary address?)
+# ToDo: Add option to reverse direction and copy from the remote to the local
+# ToDo: If you add options add usage messages
+# ToDo: undupe the copy commands by moving them into a function
+
+# import libraries
 import os
 import logging
 
+# setup debug logging (and disable by default)
 logging.disable(logging.CRITICAL)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.debug('start of program')
 
 print("\n\nStarting Calibre sync...\n")
 
+# save the current directory and then change to the Calibre directory
 print("Moving to: /Users/dave/Books/Calibre-MBP ...\n")
 startdir = os.getcwd()
 os.chdir("/Users/dave/Books/Calibre-MBP/")
 
-print("Removing .DS_Store files...\n")
-#find /Users/dave/Books/Calibre-MBP -name ".DS_Store" -delete
+# remove all those stinking .DS_Store things that macOS leaves all over
 bashCommand = "find /Users/dave/Books/Calibre-MBP -name '.DS_Store' -print -delete"
+print("Removing .DS_Store files...")
+print(bashCommand)
+print("\n")
 os.system(bashCommand)
 
-print("Removing empty directories...\n")
+# remove any empty directory left behind from working in Calibre
 bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
+print("Removing empty directories...")
+print(bashCommand)
+print("\n")
 os.system(bashCommand)
 
-# !!! Change this so that it looks for /Volumes/Calibre/Calibre-NAS and if not found unmount Calibre
-# !!! This is to fix cases where OSX goes to sleep with the NAS mounted and then
-# !!!    can't get to it when it wakes up
-#print "Unmount /Volumes/Calibre...\n"
-#bashCommand = "umount /Volumes/Calibre"
-#os.system(bashCommand)
+# copy files to .29 (iMac)
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
+print("Copying files to 192.168.1.29:calibre-server ...")
+print(bashCommand)
+print("\n")
+os.system(bashCommand)
 
-#print "Mounting smb://qnap-nas/Books...\n"
-#bashCommand = "automator ~/bin/Mount_Calibre.workflow"
-#os.system(bashCommand)
-
-#print "Copying files to /Volumes/Books/Calibre-NAS ...\n"
-print("Copying files to 192.168.1.15:calibre-server ...\n")
-#bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
-#bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ /Volumes/Books/Calibre-NAS"
-#bashCommand = "rsync -h -r -t -x -v --info=progress2 --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.15:calibre-server"
-bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.15:calibre-server"
+# copy files to .42 (Mini)
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+print("Copying files to 192.168.1.42:calibre-server ...")
+print(bashCommand)
+print("\n")
 os.system(bashCommand)
 
 #=======================
+# pseudo code for a restore option
 # RESTORE - Reverse the Stream - Server back to MBP
-# note the --dry-run, also note the / on the source but not the destination
-#rsync --dry-run -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.15:calibre-server/ /Users/dave/Books/Calibre-MBP
+# NOTE the / on the source but not the destination
+# issue ARE YOU SURE? warning
+# do it once with --dry-run
+#rsync --dry-run -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.42:calibre-server/ /Users/dave/Books/Calibre-MBP
+# issue ARE YOU REALLY SURE YOU WANT TO WIPE OUT THE LOCAL CALIBRE LIBRARY? warning
+# do it for reals
+#rsync -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.42:calibre-server/ /Users/dave/Books/Calibre-MBP
+#=======================
 
-
-#print "Unmount /Volumes/Calibre...\n"
-#bashCommand = "umount /Volumes/Calibre"
-#os.system(bashCommand)
-
+# return to the original directory
 print("Returning to original directory...\n")
 print(os.system('date'))
 os.chdir(startdir)
-
 
 print("\nAll done!\n")

@@ -14,7 +14,7 @@ logging.debug('=== start of program ===')
 HOST = socket.gethostname()
 
 if HOST.startswith("RSG", 0, 3) :
-  #print "work laptop"
+  logging.debug('work laptop')
   #os.system("cp -v ~/github/random-scripts/BingWallpaper.py ~/bin/bingwallpaper")
   #os.system("cp -v ~/github/random-scripts/checkfiles   	~/bin/")
   os.system("cp -v ~/github/random-scripts/commafy   	~/bin/")
@@ -30,9 +30,10 @@ if HOST.startswith("RSG", 0, 3) :
   os.system("cp -v ~/github/random-scripts/calupdate		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/wifiwatch		~/bin/  ")
 else :
-  #print "not work laptop"
+  logging.debug('not work laptop')
   #os.system("cp -v ~/github/random-scripts/checkfiles   	~/bin/")
   os.system("cp -v ~/github/random-scripts/BingWallpaper.py	~/bin/bingwallpaper")
+  os.system("cp -v ~/github/random-scripts/bgsync		~/bin/  ")
   os.system("cp -v ~/github/random-scripts/bouncewifi.py	~/bin/bouncewifi")
   os.system("cp -v ~/github/random-scripts/commafy   	~/bin/")
   os.system("cp -v ~/github/random-scripts/Daily_Links_Sync		~/bin/  ")

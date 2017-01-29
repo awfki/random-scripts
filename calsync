@@ -9,45 +9,45 @@
 # import libraries
 import os
 import logging
+from datetime import datetime
 
 # setup debug logging (and disable by default)
 logging.disable(logging.CRITICAL)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.debug('start of program')
 
-print("\n\nStarting Calibre sync...\n")
+print("\n\n>>> Starting Calibre sync...\n")
 
 # save the current directory and then change to the Calibre directory
-print("Moving to: /Users/dave/Books/Calibre-MBP ...\n")
+print(">>> Moving to: /Users/dave/Books/Calibre-MBP ...\n")
 startdir = os.getcwd()
 os.chdir("/Users/dave/Books/Calibre-MBP/")
 
 # remove all those stinking .DS_Store things that macOS leaves all over
 bashCommand = "find /Users/dave/Books/Calibre-MBP -name '.DS_Store' -print -delete"
-print("Removing .DS_Store files...")
+print(">>> Removing .DS_Store files...")
 print(bashCommand)
-print("\n")
+print("")
 os.system(bashCommand)
 
 # remove any empty directory left behind from working in Calibre
 bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
-print("Removing empty directories...")
+print(">>> Removing empty directories...")
 print(bashCommand)
-print("\n")
+print("")
 os.system(bashCommand)
 
 # copy files to .29 (iMac)
 bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
-print("Copying files to 192.168.1.29:calibre-server ...")
+print(">>> Copying files to 192.168.1.29:calibre-server ...")
 print(bashCommand)
-print("\n")
 os.system(bashCommand)
 
 # copy files to .42 (Mini)
 bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
-print("Copying files to 192.168.1.42:calibre-server ...")
+print("")
+print(">>> Copying files to 192.168.1.42:calibre-server ...")
 print(bashCommand)
-print("\n")
 os.system(bashCommand)
 
 #=======================
@@ -63,8 +63,9 @@ os.system(bashCommand)
 #=======================
 
 # return to the original directory
-print("Returning to original directory...\n")
-print(os.system('date'))
+print("")
+print(">>> Returning to original directory...\n")
 os.chdir(startdir)
 
-print("\nAll done!\n")
+print(">>>", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+print(">>> All done!\n")

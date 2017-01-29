@@ -9,47 +9,32 @@ logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(asctime)s %(me
 logging.debug('=======================')
 logging.debug('=== start of program ===')
 
-print("\n\nStarting Boardgame sync...\n")
+print("\n\n>>> Starting Boardgame sync...\n")
 
-print("Moving to: /Users/dave/Boardgames/_GameRules/ ...\n")
 startdir = os.getcwd()
+print(">>> Moving to: /Users/dave/Boardgames/_GameRules/ ...\n")
 os.chdir("/Users/dave/Boardgames/_GameRules/")
 
-print("Removing .DS_Store files...\n")
-#find /Users/dave/Books/Calibre-MBP -name ".DS_Store" -delete
 bashCommand = "find /Users/dave/Boardgames/_GameRules/ -name '.DS_Store' -print -delete"
+print(">>> Removing .DS_Store files...\n")
 os.system(bashCommand)
 
-print("Removing empty directories...\n")
 bashCommand = "find /Users/dave/Boardgames/_GameRules -type d -empty -print -delete"
+print(">>> Removing empty directories...\n")
 os.system(bashCommand)
 
-# !!! Change this so that it looks for /Volumes/Calibre/Calibre-NAS and if not found unmount Calibre
-# !!! This is to fix cases where OSX goes to sleep with the NAS mounted and then
-# !!!    can't get to it when it wakes up
-#print "Unmount /Volumes/Calibre...\n"
-#bashCommand = "umount /Volumes/Calibre"
-#os.system(bashCommand)
-
-#print "Mounting smb://qnap-nas/Books...\n"
-#bashCommand = "automator ~/bin/Mount_Calibre.workflow"
-#os.system(bashCommand)
-
-print("Copying files to 192.168.1.29:boardgame-server ...\n")
 bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.29:boardgame-server"
+print(">>> Copying files to 192.168.1.29:boardgame-server ...\n")
 os.system(bashCommand)
 
-print("Copying files to 192.168.1.42:boardgame-server ...\n")
 bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.42:boardgame-server"
+print("")
+print(">>> Copying files to 192.168.1.42:boardgame-server ...\n")
 os.system(bashCommand)
 
-#print "Unmount /Volumes/Calibre...\n"
-#bashCommand = "umount /Volumes/Calibre"
-#os.system(bashCommand)
-
-print("Returning to original directory...\n")
-print(os.system('date'))
+print("")
+print(">>> Returning to original directory...\n")
 os.chdir(startdir)
 
-
-print("\nAll done!\n")
+print(os.system('date'))
+print("\n>>> All done!\n")

@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+# ebook-file-pref
+# 2017-02-11: given a directory it looks for ebook file formats, it keeps the most preferred and
+# deletes the rest - then moves all remaining files to _calibre-auto-add
+# Files are preferred in this order:
+# epub, azw3, azw, mobi, pdf
+# probably need a special thing for cbr and cbz
+
+# import libraries
+import sys, getopt
+import os
+import logging
+from datetime import datetime
+
+# In the Ansible thing at work I have a better logging format - need to bring that home
+# setup debug logging (and disable by default)
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.debug('start of program')
+
+print("\n\n>>> Starting ebook-file-pref...\n")
+
+exit()
+
+
+#=======================
+
+# take directory as CLI arg
+# get list of allfiles (in ebook formats?)
+# for curbook in allfiles
+#   curbook = curbook minus the extension
+#   curbooklist =  files that match curbook.*
+#   curbookext = list of extensions from curbooklist
+#
+
+
+
+#def formatCheck(format, filename):
+#    if format in
+#   if "epub" in curbookext
+#       delete the rest
+#       move the epub to calibre-dir
+#   else
+
+
+
+
+
+# def main(argv):
+#    inputfile = ''
+#    outputfile = ''
+#    try:
+#       opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+#    except getopt.GetoptError:
+#       print 'test.py -i <inputfile> -o <outputfile>'
+#       sys.exit(2)
+#    for opt, arg in opts:
+#       if opt == '-h':
+#          print 'test.py -i <inputfile> -o <outputfile>'
+#          sys.exit()
+#       elif opt in ("-i", "--ifile"):
+#          inputfile = arg
+#       elif opt in ("-o", "--ofile"):
+#          outputfile = arg
+#    print 'Input file is "', inputfile
+#    print 'Output file is "', outputfile
+#
+# if __name__ == "__main__":
+#    main(sys.argv[1:])
+

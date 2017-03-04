@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+# readme
+# 2017-02-07: export files tagged read-me into folders based on the #priority field
+# 1: search the library for matching books and write the ids into a file
+# 2: read the file and export the books in epub/cbr format
+# ?: What if there isn't an epub?
+# ?: What if there's both epub and cbr?
+
+# import libraries
+import os
+import logging
+from datetime import datetime
+
+# setup debug logging (and disable by default)
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.debug('start of program')
+
+print("\n\n>>> Starting Readme Update...\n")
+
+#=======================
+# 2017-02-07 - not ready to prevent accidents
+exit()
+
+# save the current directory and then change to the /tmp/Calibre directory
+print(">>> Target: /Users/dave/Dropbox/Book-DB/read-me-#/...\n")
+startdir = os.getcwd()
+os.chdir("/Users/dave/Books/Calibre-MBP/")
+
+# remove all those stinking .DS_Store things that macOS leaves all over
+bashCommand = "find /Users/dave/Books/Calibre-MBP -name '.DS_Store' -print -delete"
+print(">>> Removing .DS_Store files...")
+print(bashCommand)
+print("")
+os.system(bashCommand)
+
+# remove any empty directory left behind from working in Calibre
+bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
+print(">>> Removing empty directories...")
+print(bashCommand)
+print("")
+os.system(bashCommand)
+
+# copy files to .29 (iMac)
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
+print(">>> Copying files to 192.168.1.29:calibre-server ...")
+print(bashCommand)
+os.system(bashCommand)
+
+# copy files to .42 (Mini)
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+print("")
+print(">>> Copying files to 192.168.1.42:calibre-server ...")
+print(bashCommand)
+os.system(bashCommand)
+
+#=======================
+# pseudo code for a restore option
+# RESTORE - Reverse the Stream - Server back to MBP
+# NOTE the / on the source but not the destination
+# issue ARE YOU SURE? warning
+# do it once with --dry-run
+#rsync --dry-run -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.42:calibre-server/ /Users/dave/Books/Calibre-MBP
+# issue ARE YOU REALLY SURE YOU WANT TO WIPE OUT THE LOCAL CALIBRE LIBRARY? warning
+# do it for reals
+#rsync -h -r -t -x -v --size-only --exclude=.DS_Store dave@192.168.1.42:calibre-server/ /Users/dave/Books/Calibre-MBP
+#=======================
+
+# return to the original directory
+print("")
+print(">>> Returning to original directory...\n")
+os.chdir(startdir)
+
+print(">>>", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+print(">>> All done!\n")

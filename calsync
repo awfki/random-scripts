@@ -38,13 +38,15 @@ print("")
 os.system(bashCommand)
 
 # copy files to .29 (iMac)
-bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
+#bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
 print(">>> Copying files to 192.168.1.29:calibre-server ...")
 print(bashCommand)
 os.system(bashCommand)
 
 # copy files to .42 (Mini)
-bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+#bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
 print("")
 print(">>> Copying files to 192.168.1.42:calibre-server ...")
 print(bashCommand)

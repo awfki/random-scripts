@@ -16,41 +16,57 @@ logging.disable(logging.CRITICAL)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.debug('start of program')
 
+
+rsync = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store "
+#srcdir = '/Users/dave/Books/Calibre-MBP'
+srcdir = '/Volumes/JetDrive/Calibre-JD'
 print("\n\n>>> Starting Calibre sync...\n")
 
 # save the current directory and then change to the Calibre directory
-print(">>> Moving to: /Users/dave/Books/Calibre-MBP ...\n")
+print(">>> Moving to: " + srcdir + " ...\n")
 startdir = os.getcwd()
-os.chdir("/Users/dave/Books/Calibre-MBP/")
+os.chdir(srcdir+"/")
 
 # remove all those stinking .DS_Store things that macOS leaves all over
-bashCommand = "find /Users/dave/Books/Calibre-MBP -name '.DS_Store' -print -delete"
+bashCommand = "find "+ srcdir + " -name '.DS_Store' -print -delete"
 print(">>> Removing .DS_Store files...")
 print(bashCommand)
 print("")
 os.system(bashCommand)
 
 # remove any empty directory left behind from working in Calibre
-bashCommand = "find /Users/dave/Books/Calibre-MBP -type d -empty -print -delete"
+bashCommand = "find "+ srcdir + " -type d -empty -print -delete"
 print(">>> Removing empty directories...")
 print(bashCommand)
 print("")
-os.system(bashCommand)
+#os.system(bashCommand)
 
+#=======================
 # copy files to .29 (iMac)
+tgtdir = "dave@192.168.1.29:calibre-server"
 #bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
-bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Books/Calibre-MBP/ dave@192.168.1.29:calibre-server"
-print(">>> Copying files to 192.168.1.29:calibre-server ...")
+bashCommand = rsync + srcdir + "/ " + tgtdir
+print(">>> Copying files to " + tgtdir + " ...")
 print(bashCommand)
 os.system(bashCommand)
 
 # copy files to .42 (Mini)
+tgtdir = "dave@192.168.1.42:calibre-server"
 #bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
-bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+bashCommand = rsync + srcdir + "/ " + tgtdir
 print("")
-print(">>> Copying files to 192.168.1.42:calibre-server ...")
+print(">>> Copying files to " + tgtdir + " ...")
 print(bashCommand)
 os.system(bashCommand)
+
+# # copy files to JetDrive
+# tgtdir = "/Volumes/JetDrive/Calibre-JD/"
+# #bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.42:calibre-server"
+# bashCommand = rsync + srcdir + "/ " + tgtdir
+# print("")
+# print(">>> Copying files to " + tgtdir + " ...")
+# print(bashCommand)
+# os.system(bashCommand)
 
 #=======================
 # pseudo code for a restore option

@@ -1,0 +1,5 @@
+#!/bin/bash
+# unload and reload the driver to rediscover JetDrive after hibernation
+echo sudo to rediscover JetDrive
+sudo kextunload -b com.apple.driver.AppleSDXC; sudo kextload -b com.apple.driver.AppleSDXC
+

@@ -14,22 +14,22 @@ logging.debug('=== start of program ===')
 print("\n\n>>> Starting Boardgame sync...\n")
 
 startdir = os.getcwd()
-print(">>> Moving to: /Users/dave/Boardgames/_GameRules/ ...\n")
-os.chdir("/Users/dave/Boardgames/_GameRules/")
+print(">>> Moving to: /Volumes/JetDrive/Boardgames/_GameRules-Library/ ...\n")
+os.chdir("/Volumes/JetDrive/Boardgames/_GameRules-Library/")
 
-bashCommand = "find /Users/dave/Boardgames/_GameRules/ -name '.DS_Store' -print -delete"
+bashCommand = "find /Volumes/JetDrive/Boardgames/_GameRules-Library/ -name '.DS_Store' -print -delete"
 print(">>> Removing .DS_Store files...\n")
 os.system(bashCommand)
 
-bashCommand = "find /Users/dave/Boardgames/_GameRules -type d -empty -print -delete"
+bashCommand = "find /Volumes/JetDrive/Boardgames/_GameRules-Library/ -type d -empty -print -delete"
 print(">>> Removing empty directories...\n")
 os.system(bashCommand)
 
-bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.29:boardgame-server"
+bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Boardgames/_GameRules-Library/ dave@192.168.1.29:boardgame-server"
 print(">>> Copying files to 192.168.1.29:boardgame-server ...\n")
-os.system(bashCommand)
+#os.system(bashCommand)
 
-bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Users/dave/Boardgames/_GameRules/ dave@192.168.1.42:boardgame-server"
+bashCommand = "rsync -h -r -t -x -v --progress --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Boardgames/_GameRules-Library/ dave@192.168.1.42:boardgame-server"
 print("")
 print(">>> Copying files to 192.168.1.42:boardgame-server ...\n")
 os.system(bashCommand)

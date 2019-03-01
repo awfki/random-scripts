@@ -1,0 +1,13 @@
+#!/bin/bash
+# Want this to become a script to restart HighSierraMediaKeyEnabler
+#  as it stops working periodically.
+
+# get PID of HighSierraMediaKeyEnabler
+PID=$(ps -A | grep HighSierraMediaKeyEnabler | grep -v grep | awk '{print $1}')
+#echo "$PID"
+
+# stop HighSierraMediaKeyEnabler
+kill -9 $PID
+
+# execute myprogram and background
+open /Applications/HighSierraMediaKeyEnabler.app

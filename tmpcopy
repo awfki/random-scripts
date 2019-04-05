@@ -1,0 +1,36 @@
+#!/bin/bash
+# This is a scratch script to copy files from A to B where A and B change
+#   periodically but I'll run the same thing repeatedly.
+# alter the usage and whatnot as needed
+
+SRCDIR="/some/folder/somewhere"
+DSTDIR="/a/different/folder"
+__usage="
+Usage: $(basename $0) $SITE [OPTIONS]
+2019-04-05: Copy show run for OS to the ConfigSync working dir
+  SRCDIR = ${SRCDIR}
+  DSTDIR = ${DSTDIR}
+  SITE = a|b|c
+Options:
+  There are no options.
+"
+SITE=$(printf '%s\n' "$1" | awk '{ print toupper($0) }')
+
+if [[ $# -eq 0 ]] ; then
+    echo "$__usage"
+    exit 0
+fi
+
+#ls ${SRCDIR}/${SITE}*
+#ls "${DSTDIR}/${SITE}/"
+cp ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
+#cp -v ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
+
+exit 0
+
+#=======================
+# preserving this case example as I'll never remember
+case "$1" in
+    1) echo 'you gave 1' ;;
+    *) echo 'you gave something else' ;;
+esac

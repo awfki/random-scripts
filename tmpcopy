@@ -3,14 +3,14 @@
 #   periodically but I'll run the same thing repeatedly.
 # alter the usage and whatnot as needed
 
-SRCDIR="/some/folder/somewhere"
-DSTDIR="/a/different/folder"
+SRCDIR="/Users/dnoonan/rsg_git/device_config/show_run"
+DSTDIR="/Volumes/GoogleDrive/Team Drives/Network/Projects/Config Symmetry Audit, NET-408/Data Center/OS"
 __usage="
 Usage: $(basename $0) $SITE [OPTIONS]
 2019-04-05: Copy show run for OS to the ConfigSync working dir
   SRCDIR = ${SRCDIR}
   DSTDIR = ${DSTDIR}
-  SITE = a|b|c
+  SITE = atl|sea|suw
 Options:
   There are no options.
 "
@@ -23,7 +23,8 @@ fi
 
 #ls ${SRCDIR}/${SITE}*
 #ls "${DSTDIR}/${SITE}/"
-cp ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
+#cp ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
+rsync --progress --update ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
 #cp -v ${SRCDIR}/${SITE}1-OS* "${DSTDIR}"/${SITE}/
 
 exit 0

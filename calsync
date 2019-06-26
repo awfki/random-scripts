@@ -43,12 +43,12 @@ print("")
 
 #=======================
 # copy files to .28 (iMac)
-tgtdir = "dave@192.168.1.28:calibre-server"
-#bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.28:calibre-server"
-bashCommand = rsync + srcdir + "/ " + tgtdir
-print(">>> Copying files to " + tgtdir + " ...")
-print(bashCommand)
-os.system(bashCommand)
+# tgtdir = "dave@192.168.1.28:calibre-server"
+# #bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Users/dave/Books/Calibre-MBP/ dave@192.168.1.28:calibre-server"
+# bashCommand = rsync + srcdir + "/ " + tgtdir
+# print(">>> Copying files to " + tgtdir + " ...")
+# print(bashCommand)
+# os.system(bashCommand)
 
 # copy files to .42 (Mini)
 tgtdir = "dave@192.168.1.42:calibre-server"
@@ -67,6 +67,15 @@ os.system(bashCommand)
 # print(">>> Copying files to " + tgtdir + " ...")
 # print(bashCommand)
 # os.system(bashCommand)
+
+# copy files to DNAS
+# add: if not exist tgtdir then mount tgtdir
+tgtdir = "/Volumes/Calibre/Book\ Library/"
+#bashCommand = "rsync -h -r -t -x -v --delete --size-only --exclude=.DS_Store /Volumes/JetDrive/Calibre-JD/ /Volumes/Calibre/Book\ Library/"
+bashCommand = rsync + srcdir + "/ " + tgtdir
+print(">>> Copying files to " + tgtdir + " ...")
+print(bashCommand)
+os.system(bashCommand)
 
 #=======================
 # pseudo code for a restore option
